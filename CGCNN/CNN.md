@@ -27,7 +27,8 @@ Classification 부분은 이미지 분류를 위해서 Fully Connected Layer가 
 * Convolution Layer
 
 입력된 이미지를 필터 혹은 커널을 통해 이미지 전체를 훑어줌으로써 특징을 추출하는 과정이다. 
-
+데이터의 특징을 추출하는 과정으로 데이터에 각 성분의 인접 성분들을 조사해 특징을 파악하고 파악한 특징을 한장으로 도출시키는 과정이다. 
+여기서 도출된 장을 Convolution Layer라고 한다. 이 과정은 하나의 압축 과정이며 파라미터의갯수를 효과적으로 줄여주는 역할을 합니다
 
 * Stride 
 
@@ -35,22 +36,28 @@ Classification 부분은 이미지 분류를 위해서 Fully Connected Layer가 
 
 
 
-
-
 ![image](https://user-images.githubusercontent.com/76649707/150458121-504d4026-273e-476f-a8f1-cb754986c568.png)
 
 * Padding
-stride의 크기에 따라서 Convolution ru
 합성곱을 계속 수행하게 되면 출력 이미지의 크기가 입력 이미지의 크기보다 작아지게 된다.
 이러한 경우 이미지는 점점 작아지며, 픽셀들의 정보가 사라진다. 이러한 점을 해결하기 위해 이용되는 것이 패딩
 
 
 * Pooling
-세로, 가로 방향의 공간을 줄이는 연산
+세로, 가로 방향의 공간을 줄이는 연산.
 이미지의 크기를 계속 유지한채 연산을 수행한다면, 연산량이 엄청나게 많아질 것이다.
 적당히 크기도 줄이며, 특정 Feature를 강조할 수 있게 만드는 역할 
+이는 Convolution 과정을 거친 레이어의 사이즈를 줄여주는 과정입니다.
+단순히 데이터의 사이즈를 줄여주고, 노이즈를 상쇄시키고 미세한 부분에서 일관적인 특징을 제공합니다.
 
 - Max, Average, Min으로 나눠짐 
+
+![image](https://user-images.githubusercontent.com/76649707/150459543-9fff1c37-9c2c-4923-8664-2124d1f13692.png)
+
+
+* Flatten, Fully Connected Layer(Dense)
+Flatten 과정은 convolution과 pooling층의 결과인 feature map을 1차원 벡터로 쫙~펴는 것을말한다. CNN 모델의 특징이 전체가 아닌 부분의 특징을 추출하는 것이라고 했던 것처럼 이미지의 특징들은 이미 잘게잘게 쪼개져 서로 독립적으로 존재하는 상태이기 때문에 1차원 벡터로 연결해도 문제가 되지않는다.
+이렇게 flatten과정을 거친 특징들은 fully connected 층에서 모두 연결되어 마치 MLP와 같은 구조를 가지며 최종적으로 Softmax 활성 함수를 통해 이미지가 분류된다.
 
 
 
